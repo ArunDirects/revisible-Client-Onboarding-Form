@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Revisible — Client Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1E2D5A;
+    --navy-dark: #152040;
+    --navy-mid: #2A3F7E;
+    --navy-light: #E8EBF5;
+    --gold: #D4A832;
+    --gold-dark: #B8901F;
+    --gold-light: #FBF4E1;
+    --gold-mid: #E0BA55;
+    --text-primary: #1a1a2e;
+    --text-secondary: #6b7280;
+    --border: rgba(0,0,0,0.12);
+    --border-hover: rgba(0,0,0,0.22);
+    --surface: #f9f9fb;
+    --white: #ffffff;
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f4f5f8;
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .ob-header {
+    background: var(--navy-dark);
+    padding: 1.75rem 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .ob-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: rgba(212,168,50,0.07);
+    border-radius: 50%;
+  }
+  .ob-header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -30px;
+    width: 140px; height: 140px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+  }
+  .ob-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+  .ob-logo span { color: var(--gold); font-style: italic; }
+  .ob-tagline {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  /* ── STICKY PROGRESS ── */
+  .ob-progress {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .ob-steps {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .ob-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    font-size: 12px;
+    font-weight: 500;
+    user-select: none;
+  }
+  .ob-step.inactive {
+    color: var(--text-secondary);
+    border-color: var(--border);
+    background: var(--surface);
+  }
+  .ob-step.active {
+    color: var(--navy-dark);
+    border-color: var(--gold);
+    background: var(--gold-light);
+  }
+  .ob-step.done {
+    color: #fff;
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+  .ob-step-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+  .ob-step.done .ob-step-num { background: rgba(255,255,255,0.2); }
+  .ob-step.active .ob-step-num { background: var(--gold); color: #fff; }
+
+  .ob-bar-wrap {
+    max-width: 700px;
+    margin: 0.6rem auto 0;
+    height: 3px;
+    background: #e5e7eb;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .ob-bar {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.45s ease;
+  }
+
+  /* ── BODY ── */
+  .ob-body {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.25rem 1.5rem 5rem;
+  }
+
+  .ob-panel { display: none; animation: fadeUp 0.3s ease; }
+  .ob-panel.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .ob-panel-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 27px;
+    color: var(--navy-dark);
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+  .ob-panel-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 1.75rem;
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  /* ── SECTION LABEL ── */
+  .ob-section-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin: 1.75rem 0 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ob-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e5e7eb;
+  }
+
+  /* ── FIELDS ── */
+  .ob-field { margin-bottom: 1.1rem; }
+  .ob-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+  .ob-label .req { color: var(--gold-dark); margin-left: 2px; }
+  .ob-hint {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    font-style: italic;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 9px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212,168,50,0.13);
+  }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.55; }
+
+  .ob-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* ── CHIPS ── */
+  .ob-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 4px;
+  }
+  .ob-chip {
+    padding: 6px 13px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text-secondary);
+    background: var(--white);
+    user-select: none;
+  }
+  .ob-chip:hover { border-color: var(--gold-mid); color: var(--navy-dark); }
+  .ob-chip.selected {
+    border-color: var(--gold);
+    background: var(--gold-light);
+    color: var(--navy-dark);
+    font-weight: 500;
+  }
+
+  /* ── INFO BOX ── */
+  .ob-info-box {
+    background: var(--navy-light);
+    border: 1px solid #c5cde8;
+    border-left: 3px solid var(--navy);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.4rem;
+    font-size: 13.5px;
+    color: var(--navy-dark);
+    line-height: 1.6;
+  }
+  .ob-info-box strong { font-weight: 600; }
+
+  /* ── ACCESS CARDS ── */
+  .ob-access-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.85rem;
+  }
+  .ob-access-card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .ob-access-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+    background: var(--navy-light);
+  }
+  .ob-access-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+  .ob-access-email { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+  .ob-email-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--gold-light);
+    color: var(--navy-dark);
+    margin-top: 6px;
+    font-family: 'Courier New', monospace;
+    border: 1px solid var(--gold-mid);
+  }
+
+  /* ── UPLOAD ── */
+  .ob-upload-zone {
+    border: 1.5px dashed var(--border-hover);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: all 0.15s;
+    background: var(--surface);
+  }
+  .ob-upload-zone:hover {
+    border-color: var(--gold);
+    background: var(--gold-light);
+    color: var(--navy-dark);
+  }
+
+  /* ── NAV ── */
+  .ob-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .ob-btn {
+    padding: 10px 24px;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-primary);
+  }
+  .ob-btn:hover:not(:disabled) { background: var(--surface); border-color: var(--border-hover); }
+  .ob-btn-primary {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+  .ob-btn-primary:hover:not(:disabled) { background: var(--navy-dark); border-color: var(--navy-dark); }
+  .ob-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .ob-step-counter { font-size: 12px; color: var(--text-secondary); }
+
+  /* ── SUCCESS ── */
+  .success-screen { text-align: center; padding: 3rem 1rem 2rem; }
+  .success-icon {
+    width: 72px; height: 72px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 32px;
+    border: 3px solid var(--gold);
+    color: #fff;
+  }
+  .success-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: var(--navy-dark);
+    margin-bottom: 0.6rem;
+  }
+  .success-sub {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 460px;
+    margin: 0 auto 2rem;
+  }
+  .success-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    text-align: left;
+    max-width: 420px;
+    margin: 0 auto;
+    background: var(--navy-light);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    font-size: 13.5px;
+    border: 1px solid #c5cde8;
+  }
+  .success-checklist-head {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+  .success-checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .check-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    border: 1px solid var(--gold-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--navy);
+    margin-top: 1px;
+  }
+
+  @media (max-width: 520px) {
+    .ob-row { grid-template-columns: 1fr; }
+    .ob-step span { display: none; }
+    .ob-body { padding: 1.5rem 1rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="ob-root">
+
+  <!-- HEADER -->
+  <div class="ob-header">
+    <div class="ob-logo">re<span>visible</span></div>
+    <div class="ob-tagline">Client Onboarding Portal</div>
+  </div>
+
+  <!-- STICKY PROGRESS -->
+  <div class="ob-progress">
+    <div class="ob-steps" id="stepNav"></div>
+    <div class="ob-bar-wrap"><div class="ob-bar" id="progressBar" style="width:0%"></div></div>
+  </div>
+
+  <div class="ob-body" id="obBody">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PANEL 1: Business Overview                  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="ob-panel active" id="panel-0">
+      <div class="ob-panel-title">Tell us about your business</div>
+      <div class="ob-panel-sub">Let's start with the basics so we can tailor everything to your needs.</div>
+
+      <div class="ob-info-box">
+        <strong>Welcome to Revisible!</strong> Our Account Management team will reach out shortly to schedule your onboarding call. Please complete this form first so we can hit the ground running.
+      </div>
+
+      <div class="ob-section-label">Contact Details</div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Company name <span class="req">*</span></label>
+          <input type="text" placeholder="Acme Pvt. Ltd." />
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Website URL</label>
+          <input type="url" placeholder="https://yoursite.com" />
+        </div>
+      </div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Contact name <span class="req">*</span></label>
+          <input type="text" placeholder="Your full name" />
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Email address <span class="req">*</span></label>
+          <input type="email" placeholder="you@company.com" />
+        </div>
+      </div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Phone number</label>
+          <input type="tel" placeholder="+91 98765 43210" />
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Industry</label>
+          <select>
+            <option value="">Select industry...</option>
+            <option>Retail / eCommerce</option>
+            <option>Healthcare</option>
+            <option>Real Estate</option>
+            <option>Hospitality / Food</option>
+            <option>Education</option>
+            <option>Professional Services</option>
+            <option>Technology / SaaS</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ob-section-label">About Your Business</div>
+      <div class="ob-field">
+        <label class="ob-label">What products or services do you offer? <span class="req">*</span></label>
+        <textarea placeholder="Briefly describe what you sell or provide..."></textarea>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">What makes your business unique? (USP)</label>
+        <textarea placeholder="What sets you apart from competitors?"></textarea>
+      </div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Target audience</label>
+          <div class="ob-hint">Location, demographics, industry</div>
+          <input type="text" placeholder="e.g. SMEs in Hyderabad, 30–55 yrs" />
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Top 3–5 competitors</label>
+          <input type="text" placeholder="Competitor names or URLs" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PANEL 2: Goals & Brand                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="ob-panel" id="panel-1">
+      <div class="ob-panel-title">Goals, brand & assets</div>
+      <div class="ob-panel-sub">Help us understand what success looks like for you and share your brand materials.</div>
+
+      <div class="ob-section-label">Business Goals</div>
+      <div class="ob-field">
+        <label class="ob-label">Primary business goals <span class="req">*</span></label>
+        <div class="ob-hint">Select all that apply</div>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="toggleChip(this)">More leads</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Increase sales</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Drive website traffic</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Brand awareness</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Local visibility</div>
+          <div class="ob-chip" onclick="toggleChip(this)">eCommerce growth</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Reputation management</div>
+        </div>
+      </div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Success in 3–6 months looks like...</label>
+          <textarea placeholder="e.g. 50 leads/month, page 1 rankings..." style="min-height:70px"></textarea>
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Specific KPIs or targets</label>
+          <textarea placeholder="Traffic, leads, rankings, revenue..." style="min-height:70px"></textarea>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Timeline expectations</label>
+        <select>
+          <option value="">Select expected timeline...</option>
+          <option>ASAP / Within 2 weeks</option>
+          <option>1 month</option>
+          <option>1–3 months</option>
+          <option>3–6 months</option>
+          <option>Flexible</option>
+        </select>
+      </div>
+
+      <div class="ob-section-label">Brand & Assets</div>
+      <div class="ob-field">
+        <label class="ob-label">Do you have brand guidelines?</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="singleChip(this,'brand')">Yes, full guidelines</div>
+          <div class="ob-chip" onclick="singleChip(this,'brand')">Partial (logo/colors only)</div>
+          <div class="ob-chip" onclick="singleChip(this,'brand')">No — need help creating</div>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Upload brand assets (logo, images, guidelines)</label>
+        <div class="ob-upload-zone">
+          Click to upload — or drag and drop<br>
+          <span style="font-size:11px; color:#9ca3af;">PNG, JPG, PDF, ZIP — up to 50 MB</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PANEL 3: Services                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="ob-panel" id="panel-2">
+      <div class="ob-panel-title">Services you're signing up for</div>
+      <div class="ob-panel-sub">Select all that apply — we'll tailor the questions accordingly.</div>
+
+      <div class="ob-field">
+        <div class="ob-chips" style="gap:8px;">
+          <div class="ob-chip selected" onclick="toggleChip(this)" style="padding:9px 18px; font-size:13.5px;">SEO</div>
+          <div class="ob-chip" onclick="toggleChip(this)" style="padding:9px 18px; font-size:13.5px;">Website Design</div>
+          <div class="ob-chip" onclick="toggleChip(this)" style="padding:9px 18px; font-size:13.5px;">Full Growth Bundle</div>
+          <div class="ob-chip" onclick="toggleChip(this)" style="padding:9px 18px; font-size:13.5px;">Paid Ads</div>
+          <div class="ob-chip" onclick="toggleChip(this)" style="padding:9px 18px; font-size:13.5px;">Social Media</div>
+        </div>
+      </div>
+
+      <div class="ob-section-label">SEO Details</div>
+      <div class="ob-field">
+        <label class="ob-label">Have you done SEO before?</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="singleChip(this,'seoexp')">Yes</div>
+          <div class="ob-chip" onclick="singleChip(this,'seoexp')">No</div>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Any past penalties or ranking drops?</label>
+        <textarea placeholder="Describe known issues or leave blank..." style="min-height:60px"></textarea>
+      </div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Target keywords (if known)</label>
+          <textarea placeholder="e.g. 'plumber Hyderabad', 'SEO agency India'" style="min-height:60px"></textarea>
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Services/products to rank for</label>
+          <textarea placeholder="e.g. dental implants, accounting software..." style="min-height:60px"></textarea>
+        </div>
+      </div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Target location</label>
+          <select>
+            <option>Local</option>
+            <option>National</option>
+            <option>Global</option>
+            <option>Multi-location</option>
+          </select>
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Do you currently publish content?</label>
+          <select>
+            <option>No</option>
+            <option>Occasionally</option>
+            <option>Weekly</option>
+            <option>Multiple times/week</option>
+          </select>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Known site issues</label>
+        <input type="text" placeholder="Speed, mobile, indexing issues you're aware of..." />
+      </div>
+
+      <div class="ob-section-label">Website Design Details</div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Type of website</label>
+          <select>
+            <option>Business / Corporate</option>
+            <option>eCommerce</option>
+            <option>Landing page</option>
+            <option>Portfolio</option>
+            <option>Booking / Appointment</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Approx. number of pages</label>
+          <select>
+            <option>1–5</option>
+            <option>6–10</option>
+            <option>11–20</option>
+            <option>20+</option>
+          </select>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Reference websites you like (and why)</label>
+        <textarea placeholder="URLs + what you like about them..." style="min-height:60px"></textarea>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Preferred design style</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="singleChip(this,'style')">Modern & Clean</div>
+          <div class="ob-chip" onclick="singleChip(this,'style')">Bold & Vibrant</div>
+          <div class="ob-chip" onclick="singleChip(this,'style')">Minimal</div>
+          <div class="ob-chip" onclick="singleChip(this,'style')">Corporate / Formal</div>
+          <div class="ob-chip" onclick="singleChip(this,'style')">Not sure yet</div>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Content & copywriting</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="singleChip(this,'copy')">We'll provide content</div>
+          <div class="ob-chip" onclick="singleChip(this,'copy')">Need copywriting</div>
+          <div class="ob-chip" onclick="singleChip(this,'copy')">Mix of both</div>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Special features required</label>
+        <div class="ob-chips">
+          <div class="ob-chip" onclick="toggleChip(this)">Contact forms</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Booking / appointments</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Live chat</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Payment gateway</div>
+          <div class="ob-chip" onclick="toggleChip(this)">CRM integration</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Blog</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Multi-language</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PANEL 4: Access & Credentials               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="ob-panel" id="panel-3">
+      <div class="ob-panel-title">Logins & access</div>
+      <div class="ob-panel-sub">Please share access to these platforms so we can get started efficiently. Share credentials securely during your onboarding call — not in this form.</div>
+
+      <div class="ob-info-box">
+        <strong>Secure sharing:</strong> Do not enter passwords here. Share credentials with your Account Manager directly during the onboarding call, or via a tool like 1Password or Bitwarden.
+      </div>
+
+      <div class="ob-access-card">
+        <div class="ob-access-card-head">
+          <div class="ob-access-icon">🌐</div>
+          <div>
+            <div class="ob-access-name">Website CMS</div>
+            <div class="ob-access-email">WordPress, Shopify, Wix, Webflow, etc.</div>
+          </div>
+        </div>
+        <select style="margin-bottom:8px;">
+          <option>WordPress</option><option>Shopify</option><option>Webflow</option>
+          <option>Wix</option><option>Squarespace</option><option>Custom / Other</option>
+        </select>
+        <input type="url" placeholder="Website URL" style="margin-bottom:8px;" />
+        <div class="ob-row">
+          <input type="text" placeholder="Username" />
+          <input type="password" placeholder="Password" />
+        </div>
+      </div>
+
+      <div class="ob-access-card">
+        <div class="ob-access-card-head">
+          <div class="ob-access-icon">📊</div>
+          <div>
+            <div class="ob-access-name">Google Analytics & Search Console</div>
+            <div class="ob-access-email">Add as editor / admin</div>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#6b7280;">Share access with: <span class="ob-email-badge">seo@vsplash.com</span></div>
+        <div style="margin-top:8px; font-size:12px;">
+          <a href="https://youtu.be/AJKl9iibLWE?si=X2glUNLBhcmBcYpz" style="color:var(--navy);" target="_blank">How to add users to GA &amp; Search Console ↗</a>
+        </div>
+        <div class="ob-chips" style="margin-top:10px;">
+          <div class="ob-chip selected" onclick="singleChip(this,'ga')">Have both — will share</div>
+          <div class="ob-chip" onclick="singleChip(this,'ga')">Analytics only</div>
+          <div class="ob-chip" onclick="singleChip(this,'ga')">Need setup help</div>
+        </div>
+      </div>
+
+      <div class="ob-access-card">
+        <div class="ob-access-card-head">
+          <div class="ob-access-icon">📍</div>
+          <div>
+            <div class="ob-access-name">Google Business Profile</div>
+            <div class="ob-access-email">Add as manager</div>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#6b7280;">Share access with: <span class="ob-email-badge">rm@vsplash.com</span></div>
+        <div style="margin-top:8px; font-size:12px;">
+          <a href="https://youtu.be/tYxsqyIvKMw?si=T_Fk7kBoEoMzcjC8" style="color:var(--navy);" target="_blank">How to share GBP access ↗</a>
+        </div>
+        <div class="ob-chips" style="margin-top:10px;">
+          <div class="ob-chip selected" onclick="singleChip(this,'gbp')">Have it — will share</div>
+          <div class="ob-chip" onclick="singleChip(this,'gbp')">Don't have one yet</div>
+        </div>
+      </div>
+
+      <div class="ob-access-card">
+        <div class="ob-access-card-head">
+          <div class="ob-access-icon">📱</div>
+          <div>
+            <div class="ob-access-name">Facebook & Instagram</div>
+            <div class="ob-access-email">Manager access required</div>
+          </div>
+        </div>
+        <div style="font-size:13px; color:#6b7280;">Share access with: <span class="ob-email-badge">rm@vsplash.com</span></div>
+        <div class="ob-chips" style="margin-top:10px;">
+          <div class="ob-chip selected" onclick="singleChip(this,'social')">Have both — will share</div>
+          <div class="ob-chip" onclick="singleChip(this,'social')">Facebook only</div>
+          <div class="ob-chip" onclick="singleChip(this,'social')">Instagram only</div>
+          <div class="ob-chip" onclick="singleChip(this,'social')">Don't have accounts</div>
+        </div>
+      </div>
+
+      <div class="ob-access-card">
+        <div class="ob-access-card-head">
+          <div class="ob-access-icon">🔑</div>
+          <div>
+            <div class="ob-access-name">Hosting & Domain</div>
+            <div class="ob-access-email">cPanel, Namecheap, GoDaddy, Cloudflare, etc.</div>
+          </div>
+        </div>
+        <input type="text" placeholder="Hosting provider name" style="margin-bottom:8px;" />
+        <input type="text" placeholder="Domain registrar (if different)" style="margin-bottom:8px;" />
+        <div class="ob-row">
+          <input type="text" placeholder="Username" />
+          <input type="password" placeholder="Password" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PANEL 5: Reporting & Scheduling             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="ob-panel" id="panel-4">
+      <div class="ob-panel-title">Reporting & onboarding call</div>
+      <div class="ob-panel-sub">Almost there! Let us know how you'd like to communicate and when you're free for your kickoff call.</div>
+
+      <div class="ob-section-label">Reporting Preferences</div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Reporting frequency</label>
+          <div class="ob-chips">
+            <div class="ob-chip selected" onclick="singleChip(this,'report')">Monthly</div>
+            <div class="ob-chip" onclick="singleChip(this,'report')">Fortnightly</div>
+            <div class="ob-chip" onclick="singleChip(this,'report')">Weekly</div>
+          </div>
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Preferred communication</label>
+          <div class="ob-chips">
+            <div class="ob-chip selected" onclick="singleChip(this,'comm')">Email</div>
+            <div class="ob-chip" onclick="singleChip(this,'comm')">WhatsApp</div>
+            <div class="ob-chip" onclick="singleChip(this,'comm')">Phone</div>
+            <div class="ob-chip" onclick="singleChip(this,'comm')">Video call</div>
+          </div>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Key metrics to track</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="toggleChip(this)">Organic traffic</div>
+          <div class="ob-chip selected" onclick="toggleChip(this)">Keyword rankings</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Leads generated</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Conversions</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Revenue</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Social engagement</div>
+          <div class="ob-chip" onclick="toggleChip(this)">GBP views / calls</div>
+        </div>
+      </div>
+
+      <div class="ob-section-label">Onboarding Call</div>
+      <div class="ob-field">
+        <label class="ob-label">Decision-maker for this project <span class="req">*</span></label>
+        <input type="text" placeholder="Name and role — e.g. Priya Sharma, Marketing Manager" />
+      </div>
+      <div class="ob-row">
+        <div class="ob-field">
+          <label class="ob-label">Preferred dates</label>
+          <input type="text" placeholder="e.g. Mon–Wed next week" />
+        </div>
+        <div class="ob-field">
+          <label class="ob-label">Preferred time slot</label>
+          <select>
+            <option>Morning (9am – 12pm)</option>
+            <option>Afternoon (12pm – 3pm)</option>
+            <option>Late afternoon (3pm – 6pm)</option>
+            <option>Flexible</option>
+          </select>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Anything else we should know?</label>
+        <textarea placeholder="Tight deadlines, missing content, special requirements..."></textarea>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SUCCESS PANEL                               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="ob-panel" id="panel-5">
+      <div class="success-screen">
+        <div class="success-icon">✓</div>
+        <div class="success-title">You're all set!</div>
+        <div class="success-sub">Thank you for completing the onboarding form. Our Account Management team will review your details and reach out within 1 business day to schedule your kickoff call.</div>
+        <div class="success-checklist">
+          <div class="success-checklist-head">Your next steps</div>
+          <div class="success-checklist-item">
+            <div class="check-dot">1</div>
+            <span>Add <strong>seo@vsplash.com</strong> to Google Analytics &amp; Search Console</span>
+          </div>
+          <div class="success-checklist-item">
+            <div class="check-dot">2</div>
+            <span>Add <strong>rm@vsplash.com</strong> to Google Business Profile, Facebook &amp; Instagram</span>
+          </div>
+          <div class="success-checklist-item">
+            <div class="check-dot">3</div>
+            <span>Gather your brand assets — logo, images, brand guidelines</span>
+          </div>
+          <div class="success-checklist-item">
+            <div class="check-dot">4</div>
+            <span>Watch for a call from our team to confirm your preferred time slot</span>
+          </div>
+        </div>
+        <div style="margin-top:2rem; font-size:13px; color:#9ca3af;">
+          Questions? Reach us at <a href="mailto:hello@revisible.com" style="color:var(--navy); font-weight:500;">hello@revisible.com</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div class="ob-nav" id="navBar">
+      <button class="ob-btn" id="prevBtn" onclick="go(-1)" disabled>← Back</button>
+      <span class="ob-step-counter" id="stepCounter">Step 1 of 5</span>
+      <button class="ob-btn ob-btn-primary" id="nextBtn" onclick="go(1)">Continue →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const STEPS = [
+    { short: 'Business' },
+    { short: 'Goals' },
+    { short: 'Services' },
+    { short: 'Access' },
+    { short: 'Reporting' },
+  ];
+  const TOTAL = STEPS.length;
+  let current = 0;
+
+  function buildNav() {
+    document.getElementById('stepNav').innerHTML = STEPS.map((s, i) => `
+      <div class="ob-step ${i === 0 ? 'active' : 'inactive'}" id="nav-${i}" onclick="jumpTo(${i})">
+        <div class="ob-step-num">${i + 1}</div>
+        <span>${s.short}</span>
+      </div>
+    `).join('');
+  }
+
+  function jumpTo(idx) {
+    if (idx > current) return;
+    current = idx;
+    render();
+  }
+
+  function go(dir) {
+    if (dir === 1 && current <= TOTAL) { current++; render(); }
+    else if (dir === -1 && current > 0) { current--; render(); }
+  }
+
+  function render() {
+    document.querySelectorAll('.ob-panel').forEach((p, i) => {
+      p.classList.toggle('active', i === current);
+    });
+    document.getElementById('progressBar').style.width = (Math.min(current, TOTAL) / TOTAL * 100) + '%';
+    STEPS.forEach((s, i) => {
+      const el = document.getElementById('nav-' + i);
+      if (!el) return;
+      el.className = 'ob-step ' + (i < current ? 'done' : i === current ? 'active' : 'inactive');
+    });
+    const navBar = document.getElementById('navBar');
+    if (current >= TOTAL) {
+      navBar.style.display = 'none';
+      document.getElementById('progressBar').style.width = '100%';
+    } else {
+      navBar.style.display = 'flex';
+      document.getElementById('prevBtn').disabled = current === 0;
+      document.getElementById('nextBtn').textContent = current === TOTAL - 1 ? 'Submit ✓' : 'Continue →';
+      document.getElementById('stepCounter').textContent = 'Step ' + (current + 1) + ' of ' + TOTAL;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleChip(el) { el.classList.toggle('selected'); }
+
+  function singleChip(el, group) {
+    el.closest('.ob-chips').querySelectorAll('.ob-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  buildNav();
+  render();
+</script>
+
+</body>
+</html>
