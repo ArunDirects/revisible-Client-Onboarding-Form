@@ -6,35 +6,55 @@
 <title>Revisible — Client Onboarding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 
 :root {
-  --ink:             #FFFFFF;
-  --slate:           #F4F5F8;
-  --inset:           #ECEEF2;
-  --steel:           #FFFFFF;
-  --white:           #1A1D23;
-  --mist:            #4B5263;
-  --fog:             #8A92A0;
-  --steel-text:      #9CA3AF;
-  --beacon:          #E8B547;
-  --beacon-glow:     #F4CC73;
-  --green:           #22C55E;
-  --red:             #EF4444;
-  --hairline:        rgba(0,0,0,0.09);
-  --hairline-strong: rgba(0,0,0,0.15);
-  --hairline-bright: rgba(232,181,71,0.50);
-  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  /* ── Colours from about.html ── */
+  --navy:            #1A2744;
+  --navy-mid:        #243560;
+  --navy-light:      #3D4F7C;
+  --slate:           #2D3A5C;
+  --mist:            #8A96B5;
+  --grey:            #53565A;
+  --grey-dk:         #3a3d40;
+  --cream:           #F5F2EC;
+  --linen:           #EAE6DC;
+  --stone:           #D5D0C5;
+  --pebble:          #B0A99A;
+  --gold:            #C49A2A;
+  --gold-lt:         #E8B84B;
+  --gold-warm:       #F9EBC8;
+  --green:           #2D6A4F;
+  --green-lt:        #52B788;
+  --white:           #fff;
+  --red:             #8B2020;
+
+  /* ── Mapped aliases used by onboarding styles ── */
+  --ink:             #fff;
+  --inset:           #EAE6DC;
+  --steel:           #fff;
+  --fog:             #8A96B5;
+  --steel-text:      #B0A99A;
+  --beacon:          #E8B84B;
+  --beacon-glow:     #f0c84e;
+  --hairline:        rgba(26,39,68,0.10);
+  --hairline-strong: rgba(26,39,68,0.18);
+  --hairline-bright: rgba(232,184,75,0.50);
+
+  /* ── Fonts from about.html ── */
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --mono:  'DM Mono', 'Courier New', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: #FFFFFF;
-  color: var(--white);
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--navy);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -45,8 +65,8 @@ body {
 
 /* ── HEADER ── */
 .ob-header {
-  background: #ECEEF2;
-  border-bottom: 1px solid var(--hairline);
+  background: var(--navy);
+  border-bottom: 2px solid var(--linen);
   padding: 18px 32px;
   display: flex;
   align-items: center;
@@ -56,19 +76,19 @@ body {
   z-index: 200;
 }
 .ob-logo {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 22px;
-  font-weight: 700;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 900;
   letter-spacing: -0.03em;
-  color: var(--white);
+  color: var(--navy);
   line-height: 1;
   display: flex;
   align-items: baseline;
   gap: 0;
 }
-.ob-logo-re { color: #1A1D23; }
+.ob-logo-re { color: var(--cream); }
 .ob-logo-visible {
-  color: var(--beacon);
+  color: var(--gold-lt);
   font-style: italic;
 }
 .ob-portal-tag {
@@ -77,17 +97,17 @@ body {
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--fog);
-  background: var(--steel);
-  border: 1px solid var(--hairline);
+  color: var(--pebble);
+  background: var(--navy-mid);
+  border: 1px solid var(--navy-light);
   padding: 4px 10px;
   border-radius: 6px;
 }
 
 /* ── STEP NAV ── */
 .ob-progress {
-  background: var(--slate);
-  border-bottom: 1px solid var(--hairline);
+  background: var(--linen);
+  border-bottom: 1px solid var(--stone);
   padding: 0 32px;
   position: sticky;
   top: 61px;
@@ -158,16 +178,17 @@ body {
   display: block;
 }
 .ob-panel-title {
+  font-family: var(--serif);
   font-size: clamp(28px, 4vw, 40px);
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1.08;
   letter-spacing: -0.02em;
-  color: var(--white);
+  color: var(--navy);
   margin-bottom: 12px;
 }
 .ob-panel-title em {
   font-style: italic;
-  color: var(--white);
+  color: var(--gold);
   position: relative;
   display: inline-block;
 }
@@ -209,17 +230,17 @@ body {
 
 /* ── INFO BOX ── */
 .ob-info-box {
-  background: #ECEEF2;
-  border: 1px solid var(--hairline);
-  border-left: 2px solid var(--beacon);
+  background: var(--linen);
+  border: 1px solid var(--stone);
+  border-left: 3px solid var(--gold-lt);
   border-radius: 10px;
   padding: 16px 20px;
   margin-bottom: 36px;
   font-size: 14px;
-  color: var(--mist);
+  color: var(--grey-dk);
   line-height: 1.65;
 }
-.ob-info-box strong { color: var(--white); font-weight: 600; }
+.ob-info-box strong { color: var(--navy); font-weight: 600; }
 
 /* ── FIELDS ── */
 .ob-field { margin-bottom: 20px; }
@@ -249,7 +270,7 @@ textarea,
 select {
   width: 100%;
   padding: 11px 14px;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 14px;
   font-weight: 400;
   border: 1px solid var(--hairline-strong);
@@ -272,7 +293,7 @@ select {
   background-position: right 12px center;
   padding-right: 36px;
 }
-select option { background: #F4F5F8; color: #1A1D23; }
+select option { background: var(--cream); color: var(--navy); }
 textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 
 .ob-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -405,7 +426,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   font-size: 13px;
   color: var(--fog);
   transition: all 0.15s;
-  background: #ECEEF2;
+  background: var(--linen);
   line-height: 1.7;
 }
 .ob-upload-zone:hover {
@@ -419,10 +440,11 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 .success-screen { text-align: center; padding: 24px 0 0; }
 .success-glyph  { font-size: 44px; display: block; margin-bottom: 18px; }
 .success-title  {
+  font-family: var(--serif);
   font-size: clamp(26px, 4vw, 40px);
-  font-weight: 700;
+  font-weight: 900;
   letter-spacing: -0.025em;
-  color: var(--white);
+  color: var(--navy);
   line-height: 1.1;
   margin-bottom: 14px;
 }
@@ -527,7 +549,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   border-top: 1px solid var(--hairline);
 }
 .ob-btn {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--sans);
   font-size: 14px;
   font-weight: 600;
   padding: 11px 22px;
@@ -567,19 +589,19 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 
 /* ── FOOTER ── */
 .ob-footer {
-  border-top: 1px solid var(--hairline);
+  border-top: 2px solid var(--linen);
   padding: 18px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ECEEF2;
+  background: var(--navy);
 }
-.ob-footer-brand { font-size: 13px; color: var(--fog); font-family: var(--mono); letter-spacing: 0.02em; }
-.ob-footer-brand b { color: var(--white); font-weight: 700; font-style: normal; }
-.ob-footer-brand i { color: var(--beacon); font-style: italic; }
-.ob-footer-contact { font-size: 13px; color: var(--fog); }
+.ob-footer-brand { font-size: 13px; color: var(--pebble); font-family: var(--mono); letter-spacing: 0.02em; }
+.ob-footer-brand b { color: var(--cream); font-weight: 700; font-style: normal; }
+.ob-footer-brand i { color: var(--gold-lt); font-style: italic; }
+.ob-footer-contact { font-size: 13px; color: var(--pebble); }
 .ob-footer-contact a { color: var(--mist); text-decoration: none; }
-.ob-footer-contact a:hover { color: var(--white); }
+.ob-footer-contact a:hover { color: var(--cream); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
@@ -1188,7 +1210,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 
 <!-- FOOTER -->
 <footer class="ob-footer">
-  <div class="ob-footer-brand"><b>re<i>visible</i></b> · Client Onboarding · A VSplash Company</div>
+  <div class="ob-footer-brand"><b>re<i>visible</i></b> · Client Onboarding · A vSplash Company</div>
   <div class="ob-footer-contact">
     <a href="mailto:contact@revisible.com">contact@revisible.com</a> &nbsp;·&nbsp;
     <a href="tel:+12013554000">(201) 355-4000</a>
