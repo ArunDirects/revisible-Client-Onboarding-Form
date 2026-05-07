@@ -55,7 +55,7 @@ body {
   font-family: var(--sans);
   background: var(--cream);
   color: var(--navy);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -93,7 +93,7 @@ body {
 }
 .ob-portal-tag {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -127,7 +127,7 @@ body {
   border-bottom: 2px solid transparent;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--fog);
   user-select: none;
@@ -139,16 +139,16 @@ body {
   width: 20px; height: 20px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   font-family: var(--mono);
-  background: var(--steel);
+  background: var(--white);
   border: 1px solid var(--hairline);
   flex-shrink: 0;
   transition: all 0.2s;
 }
 .ob-step.active .ob-step-num { background: var(--beacon); color: var(--ink); border-color: var(--beacon); }
-.ob-step.done   .ob-step-num { background: var(--green);  color: var(--ink); border-color: var(--green); font-size:11px; }
+.ob-step.done   .ob-step-num { background: var(--green);  color: var(--ink); border-color: var(--green); font-size:13px; }
 
 /* ── BODY ── */
 .ob-body {
@@ -169,7 +169,7 @@ body {
 /* ── TYPOGRAPHY ── */
 .ob-eyebrow {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -201,7 +201,7 @@ body {
   z-index: -1;
 }
 .ob-panel-sub {
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.6;
   color: var(--mist);
   margin-bottom: 40px;
@@ -211,7 +211,7 @@ body {
 /* ── SECTION LABEL ── */
 .ob-section-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -236,7 +236,7 @@ body {
   border-radius: 10px;
   padding: 16px 20px;
   margin-bottom: 36px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--grey-dk);
   line-height: 1.65;
 }
@@ -246,15 +246,15 @@ body {
 .ob-field { margin-bottom: 20px; }
 .ob-label {
   display: block;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 500;
-  color: var(--white);
+  color: var(--navy);
   margin-bottom: 7px;
   letter-spacing: -0.005em;
 }
 .ob-label .req { color: var(--beacon); margin-left: 3px; }
 .ob-hint {
-  font-size: 11.5px;
+  font-size: 13.5px;
   color: var(--fog);
   margin-bottom: 7px;
   font-family: var(--mono);
@@ -271,14 +271,13 @@ select {
   width: 100%;
   padding: 11px 14px;
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   border: 1px solid var(--hairline-strong);
   border-radius: 10px;
-  background: var(--steel);
-  color: var(--white);
+  background: var(--white);
+  color: var(--navy);
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
   -webkit-appearance: none;
 }
 input::placeholder, textarea::placeholder { color: var(--fog); }
@@ -304,16 +303,16 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   padding: 7px 14px;
   border-radius: 8px;
   border: 1px solid var(--hairline-strong);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
   color: var(--mist);
-  background: var(--steel);
+  background: var(--white);
   user-select: none;
   letter-spacing: -0.005em;
 }
-.ob-chip:hover { border-color: rgba(255,255,255,0.24); color: var(--white); }
+.ob-chip:hover { border-color: var(--stone); color: var(--navy); }
 .ob-chip.selected {
   border-color: var(--beacon);
   background: rgba(232,181,71,0.10);
@@ -329,7 +328,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   margin-top: 4px;
 }
 .ob-service-card {
-  background: var(--slate);
+  background: var(--white);
   border: 1px solid var(--hairline-strong);
   border-radius: 12px;
   padding: 18px 16px 15px;
@@ -337,25 +336,25 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   transition: all 0.15s;
   user-select: none;
 }
-.ob-service-card:hover { border-color: rgba(255,255,255,0.24); }
+.ob-service-card:hover { border-color: var(--stone); }
 .ob-service-card.selected {
   border-color: var(--beacon);
   background: rgba(232,181,71,0.07);
 }
 .ob-service-icon { font-size: 20px; margin-bottom: 9px; display: block; }
 .ob-service-name {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
-  color: var(--white);
+  color: var(--navy);
   letter-spacing: -0.01em;
   line-height: 1.3;
 }
-.ob-service-desc { font-size: 11.5px; color: var(--fog); margin-top: 3px; line-height: 1.4; }
+.ob-service-desc { font-size: 13.5px; color: var(--fog); margin-top: 3px; line-height: 1.4; }
 .ob-service-card.selected .ob-service-name { color: var(--beacon); }
 
 /* ── ACCESS CARDS ── */
 .ob-access-card {
-  background: var(--slate);
+  background: var(--white);
   border: 1px solid var(--hairline);
   border-radius: 14px;
   padding: 20px 22px;
@@ -375,18 +374,18 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   display: flex; align-items: center; justify-content: center;
   font-size: 18px;
   flex-shrink: 0;
-  background: var(--steel);
+  background: var(--white);
   border: 1px solid var(--hairline);
 }
-.ob-access-name { font-size: 15px; font-weight: 600; color: var(--white); letter-spacing: -0.01em; }
-.ob-access-sub  { font-size: 12px; color: var(--fog); margin-top: 2px; font-family: var(--mono); }
+.ob-access-name { font-size: 17px; font-weight: 600; color: var(--navy); letter-spacing: -0.01em; }
+.ob-access-sub  { font-size: 16px; color: var(--fog); margin-top: 2px; font-family: var(--mono); }
 
 .ob-share-row {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--fog);
   font-family: var(--mono);
   letter-spacing: 0.02em;
@@ -396,7 +395,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   align-items: center;
   padding: 4px 10px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   background: rgba(232,181,71,0.10);
   color: var(--beacon);
@@ -405,7 +404,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   letter-spacing: 0.01em;
 }
 .ob-access-link {
-  font-size: 12px;
+  font-size: 16px;
   color: var(--beacon);
   text-decoration: none;
   font-family: var(--mono);
@@ -423,7 +422,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   padding: 24px 16px;
   text-align: center;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--fog);
   transition: all 0.15s;
   background: var(--linen);
@@ -462,7 +461,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   z-index: -1;
 }
 .success-sub {
-  font-size: 15px;
+  font-size: 17px;
   color: var(--mist);
   line-height: 1.65;
   max-width: 520px;
@@ -479,7 +478,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   overflow: hidden;
   margin-bottom: 28px;
 }
-.ob-stat-cell { background: var(--slate); padding: 20px 16px; text-align: center; }
+.ob-stat-cell { background: var(--white); padding: 20px 16px; text-align: center; }
 .ob-stat-num  {
   font-size: 30px;
   font-weight: 700;
@@ -488,7 +487,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   line-height: 1;
 }
 .ob-stat-label {
-  font-size: 11px;
+  font-size: 15px;
   color: var(--fog);
   margin-top: 5px;
   font-family: var(--mono);
@@ -497,7 +496,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 }
 
 .ob-next-steps {
-  background: var(--slate);
+  background: var(--white);
   border: 1px solid var(--hairline);
   border-radius: 14px;
   overflow: hidden;
@@ -513,13 +512,13 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   transition: background 0.15s;
 }
 .ob-next-step:last-child { border-bottom: none; }
-.ob-next-step:hover { background: rgba(255,255,255,0.02); }
+.ob-next-step:hover { background: var(--linen); }
 .ob-next-step-num {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--fog);
-  background: var(--steel);
+  background: var(--white);
   border: 1px solid var(--hairline);
   width: 26px; height: 26px;
   border-radius: 6px;
@@ -527,11 +526,11 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   flex-shrink: 0;
   margin-top: 2px;
 }
-.ob-next-step-text { font-size: 14px; color: var(--mist); line-height: 1.55; }
-.ob-next-step-text strong { color: var(--white); font-weight: 600; }
+.ob-next-step-text { font-size: 16px; color: var(--mist); line-height: 1.55; }
+.ob-next-step-text strong { color: var(--navy); font-weight: 600; }
 
 .success-reassurance {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--fog);
   font-family: var(--mono);
   letter-spacing: 0.03em;
@@ -550,13 +549,13 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 }
 .ob-btn {
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   padding: 11px 22px;
   border-radius: 10px;
   border: 1px solid var(--hairline-strong);
   background: transparent;
-  color: var(--white);
+  color: var(--navy);
   cursor: pointer;
   transition: all 0.18s ease;
   letter-spacing: -0.005em;
@@ -565,8 +564,8 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   gap: 8px;
 }
 .ob-btn:hover:not(:disabled) {
-  border-color: rgba(255,255,255,0.28);
-  background: rgba(255,255,255,0.04);
+  border-color: var(--stone);
+  background: var(--linen);
 }
 .ob-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 .ob-btn-primary {
@@ -581,7 +580,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 }
 
 .ob-step-counter {
-  font-size: 12px;
+  font-size: 16px;
   color: var(--fog);
   font-family: var(--mono);
   letter-spacing: 0.06em;
@@ -596,10 +595,10 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   justify-content: space-between;
   background: var(--navy);
 }
-.ob-footer-brand { font-size: 13px; color: var(--pebble); font-family: var(--mono); letter-spacing: 0.02em; }
+.ob-footer-brand { font-size: 15px; color: var(--pebble); font-family: var(--mono); letter-spacing: 0.02em; }
 .ob-footer-brand b { color: var(--cream); font-weight: 700; font-style: normal; }
 .ob-footer-brand i { color: var(--gold-lt); font-style: italic; }
-.ob-footer-contact { font-size: 13px; color: var(--pebble); }
+.ob-footer-contact { font-size: 15px; color: var(--pebble); }
 .ob-footer-contact a { color: var(--mist); text-decoration: none; }
 .ob-footer-contact a:hover { color: var(--cream); }
 
@@ -799,7 +798,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
       <div class="ob-upload-zone">
         <span class="ob-upload-icon">◆</span>
         Click to upload — or drag and drop<br>
-        <span style="font-size:11px; color:var(--fog); font-family:var(--mono);">PNG · JPG · PDF · ZIP · up to 50 MB</span>
+        <span style="font-size:15px; color:var(--fog); font-family:var(--mono);">PNG · JPG · PDF · ZIP · up to 50 MB</span>
       </div>
     </div>
   </div>
