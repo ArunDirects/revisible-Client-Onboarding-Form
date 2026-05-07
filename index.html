@@ -80,17 +80,14 @@ body {
   font-size: 28px;
   font-weight: 900;
   letter-spacing: -0.03em;
-  color: var(--navy);
+  font-style: normal;
   line-height: 1;
+  text-decoration: none;
   display: flex;
   align-items: baseline;
-  gap: 0;
 }
-.ob-logo-re { color: var(--cream); }
-.ob-logo-visible {
-  color: var(--gold-lt);
-  font-style: italic;
-}
+.ob-logo .re { color: var(--cream); }
+.ob-logo .vi { color: var(--gold-lt); }
 .ob-portal-tag {
   font-family: var(--mono);
   font-size: 15px;
@@ -595,9 +592,10 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
   justify-content: space-between;
   background: var(--navy);
 }
-.ob-footer-brand { font-size: 15px; color: var(--pebble); font-family: var(--mono); letter-spacing: 0.02em; }
-.ob-footer-brand b { color: var(--cream); font-weight: 700; font-style: normal; }
-.ob-footer-brand i { color: var(--gold-lt); font-style: italic; }
+.ob-footer-brand { font-size: 15px; color: var(--pebble); font-family: var(--serif); font-weight: 900; letter-spacing: -0.02em; }
+.ob-footer-brand .re { color: var(--cream); }
+.ob-footer-brand .vi { color: var(--gold-lt); }
+.ob-footer-brand span.sep { font-family: var(--mono); font-size: 13px; font-weight: 400; color: var(--pebble); letter-spacing: 0.02em; }
 .ob-footer-contact { font-size: 15px; color: var(--pebble); }
 .ob-footer-contact a { color: var(--mist); text-decoration: none; }
 .ob-footer-contact a:hover { color: var(--cream); }
@@ -621,8 +619,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 
 <!-- ── HEADER ── -->
 <header class="ob-header">
-  <div class="ob-logo">
-    <span class="ob-logo-re">re</span><span class="ob-logo-visible">visible</span>
+  <div class="ob-logo"><span class="re">re</span><span class="vi">visible</span></div>
   </div>
   <span class="ob-portal-tag">Client Onboarding Portal</span>
 </header>
@@ -1209,7 +1206,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
 
 <!-- FOOTER -->
 <footer class="ob-footer">
-  <div class="ob-footer-brand"><b>re<i>visible</i></b> · Client Onboarding · A vSplash Company</div>
+  <div class="ob-footer-brand"><span class="re">re</span><span class="vi">visible</span><span class="sep"> · Client Onboarding · A vSplash Company</span></div>
   <div class="ob-footer-contact">
     <a href="mailto:contact@revisible.com">contact@revisible.com</a> &nbsp;·&nbsp;
     <a href="tel:+12013554000">(201) 355-4000</a>
