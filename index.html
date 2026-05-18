@@ -783,9 +783,12 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
     <div class="ob-field">
       <label class="ob-label">Do you have brand guidelines?</label>
       <div class="ob-chips">
-        <div class="ob-chip selected" onclick="singleChip(this,'brand')">Yes — full guidelines</div>
-        <div class="ob-chip" onclick="singleChip(this,'brand')">Partial (logo / colors only)</div>
-        <div class="ob-chip" onclick="singleChip(this,'brand')">No — need help creating</div>
+        <div class="ob-chip selected" onclick="singleChip(this,'brand');toggleBrandNote(this,'yes')">Yes — full guidelines</div>
+        <div class="ob-chip" onclick="singleChip(this,'brand');toggleBrandNote(this,'partial')">Partial (logo / colors only)</div>
+        <div class="ob-chip" onclick="singleChip(this,'brand');toggleBrandNote(this,'no')">No — need help creating</div>
+      </div>
+      <div id="brandGuideNote" style="display:none; margin-top:12px;" class="ob-info-box">
+        <strong>We can help with that.</strong> Our team offers brand guideline creation as an add-on service — including logo, colour palette, typography, and usage rules. We'll include a cost for this in your onboarding proposal.
       </div>
     </div>
 
@@ -814,32 +817,32 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
     <div class="ob-field">
       <label class="ob-label">Services selected <span class="req">*</span></label>
       <div class="ob-service-grid">
-        <div class="ob-service-card selected" onclick="this.classList.toggle('selected')">
+        <div class="ob-service-card selected" onclick="toggleService(this,'seo')">
           <span class="ob-service-icon">◆</span>
           <div class="ob-service-name">SEO</div>
           <div class="ob-service-desc">Search, voice & AI visibility</div>
         </div>
-        <div class="ob-service-card" onclick="this.classList.toggle('selected')">
+        <div class="ob-service-card" onclick="toggleService(this,'web-design')">
           <span class="ob-service-icon">▲</span>
           <div class="ob-service-name">Website Design</div>
           <div class="ob-service-desc">Strategy, design & build</div>
         </div>
-        <div class="ob-service-card" onclick="this.classList.toggle('selected')">
+        <div class="ob-service-card" onclick="toggleService(this,'growth-bundle')">
           <span class="ob-service-icon">★</span>
           <div class="ob-service-name">Growth Bundle</div>
           <div class="ob-service-desc">Design + SEO + Marketing</div>
         </div>
-        <div class="ob-service-card" onclick="this.classList.toggle('selected')">
+        <div class="ob-service-card" onclick="toggleService(this,'paid-ads')">
           <span class="ob-service-icon">→</span>
           <div class="ob-service-name">Paid Ads</div>
           <div class="ob-service-desc">Google & Meta campaigns</div>
         </div>
-        <div class="ob-service-card" onclick="this.classList.toggle('selected')">
+        <div class="ob-service-card selected" onclick="toggleService(this,'social-media')">
           <span class="ob-service-icon">✓</span>
           <div class="ob-service-name">Social Media</div>
           <div class="ob-service-desc">Content & community</div>
         </div>
-        <div class="ob-service-card" onclick="this.classList.toggle('selected')">
+        <div class="ob-service-card selected" onclick="toggleService(this,'reputation')">
           <span class="ob-service-icon">◆</span>
           <div class="ob-service-name">Reputation</div>
           <div class="ob-service-desc">Reviews & brand trust</div>
@@ -847,6 +850,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
       </div>
     </div>
 
+    <div id="seoSection" style="display:block;">
     <div class="ob-section-label">SEO Details</div>
 
     <div class="ob-field">
@@ -898,11 +902,13 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
       <label class="ob-label">Known site issues</label>
       <input type="text" placeholder="Speed, mobile usability, indexing errors — anything you're already aware of..." />
     </div>
+    </div><!-- /seoSection -->
 
+    <div id="webDesignSection" style="display:none;">
     <div class="ob-section-label">Website Design Details</div>
 
     <div class="ob-info-box" style="margin-bottom: 20px;">
-      <strong>Haven't purchased Website Design yet?</strong> You're welcome to fill this in if you're interested — our team will reach out to discuss adding it to your package. These details won't be actioned until a website design service has been confirmed.
+      <strong>Haven't purchased Website Design yet?</strong> You're welcome to fill this in if you're interested — our team will reach out to discuss adding it to your package based on the details provided.
     </div>
 
     <div class="ob-row">
@@ -966,6 +972,262 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
         <div class="ob-chip" onclick="toggleChip(this)">Member / login area</div>
       </div>
     </div>
+    </div><!-- /webDesignSection -->
+
+    <!-- ── GROWTH BUNDLE DETAILS ── -->
+    <div id="growthBundleSection" style="display:none;">
+    <div class="ob-section-label">Growth Bundle Details</div>
+
+    <div class="ob-info-box" style="margin-bottom: 20px;">
+      <strong>Growth Bundle includes Website Design + SEO + Marketing.</strong> Please fill in the details below so we can plan your complete growth strategy from day one.
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Primary growth focus</label>
+      <div class="ob-chips">
+        <div class="ob-chip selected" onclick="singleChip(this,'growth-focus')">Traffic & Rankings</div>
+        <div class="ob-chip" onclick="singleChip(this,'growth-focus')">Lead Generation</div>
+        <div class="ob-chip" onclick="singleChip(this,'growth-focus')">eCommerce Sales</div>
+        <div class="ob-chip" onclick="singleChip(this,'growth-focus')">Brand Awareness</div>
+      </div>
+    </div>
+
+    <div class="ob-row">
+      <div class="ob-field">
+        <label class="ob-label">Current monthly website visitors (approx.)</label>
+        <select>
+          <option>Not sure</option>
+          <option>Under 500</option>
+          <option>500 – 2,000</option>
+          <option>2,000 – 10,000</option>
+          <option>10,000+</option>
+        </select>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Target traffic growth (in 6 months)</label>
+        <input type="text" placeholder="e.g. 3× current traffic, 10,000 visitors/mo" />
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Existing marketing channels in use</label>
+      <div class="ob-chips">
+        <div class="ob-chip" onclick="toggleChip(this)">Organic SEO</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Google Ads</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Social Media</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Email Marketing</div>
+        <div class="ob-chip" onclick="toggleChip(this)">None yet</div>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Any specific campaigns or launches planned?</label>
+      <textarea placeholder="Upcoming product launches, seasonal promotions, events — anything we should plan around..." style="min-height:64px"></textarea>
+    </div>
+    </div><!-- /growthBundleSection -->
+
+    <!-- ── PAID ADS DETAILS ── -->
+    <div id="paidAdsSection" style="display:none;">
+    <div class="ob-section-label">Paid Ads Details</div>
+
+    <div class="ob-info-box" style="margin-bottom: 20px;">
+      <strong>Haven't purchased Paid Ads yet?</strong> Fill this in if you're interested — our team will reach out to discuss adding it to your package.
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Ad platforms to run</label>
+      <div class="ob-chips">
+        <div class="ob-chip selected" onclick="toggleChip(this)">Google Search Ads</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Google Display</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Meta (Facebook & Instagram)</div>
+        <div class="ob-chip" onclick="toggleChip(this)">YouTube</div>
+        <div class="ob-chip" onclick="toggleChip(this)">LinkedIn</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Not sure — advise me</div>
+      </div>
+    </div>
+
+    <div class="ob-row">
+      <div class="ob-field">
+        <label class="ob-label">Monthly ad spend budget</label>
+        <select>
+          <option>Under $500 / mo</option>
+          <option>$500 – $1,500 / mo</option>
+          <option>$1,500 – $3,000 / mo</option>
+          <option>$3,000 – $7,500 / mo</option>
+          <option>$7,500+ / mo</option>
+          <option>Flexible / TBD</option>
+        </select>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Primary campaign goal</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="singleChip(this,'ads-goal')">Leads</div>
+          <div class="ob-chip" onclick="singleChip(this,'ads-goal')">Sales</div>
+          <div class="ob-chip" onclick="singleChip(this,'ads-goal')">Traffic</div>
+          <div class="ob-chip" onclick="singleChip(this,'ads-goal')">Awareness</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Have you run paid ads before?</label>
+      <div class="ob-chips">
+        <div class="ob-chip selected" onclick="singleChip(this,'ads-exp')">Yes — active accounts exist</div>
+        <div class="ob-chip" onclick="singleChip(this,'ads-exp')">Yes — but paused / old</div>
+        <div class="ob-chip" onclick="singleChip(this,'ads-exp')">No — starting fresh</div>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Landing page / destination URL</label>
+      <input type="url" placeholder="Where should ad clicks land? e.g. https://yoursite.com/contact" />
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Target audience for ads</label>
+      <textarea placeholder="Age, location, interests, job title, behaviours — the more specific the better..." style="min-height:64px"></textarea>
+    </div>
+    </div><!-- /paidAdsSection -->
+
+    <!-- ── SOCIAL MEDIA DETAILS ── -->
+    <div id="socialMediaSection" style="display:block;">
+    <div class="ob-section-label">Social Media Details</div>
+
+    <div class="ob-info-box" style="margin-bottom: 20px;">
+      <strong>Haven't purchased Social Media yet?</strong> Fill this in if you're interested — our team will reach out to discuss adding it to your package.
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Platforms to manage</label>
+      <div class="ob-chips">
+        <div class="ob-chip selected" onclick="toggleChip(this)">Instagram</div>
+        <div class="ob-chip selected" onclick="toggleChip(this)">Facebook</div>
+        <div class="ob-chip" onclick="toggleChip(this)">LinkedIn</div>
+        <div class="ob-chip" onclick="toggleChip(this)">X (Twitter)</div>
+        <div class="ob-chip" onclick="toggleChip(this)">TikTok</div>
+        <div class="ob-chip" onclick="toggleChip(this)">YouTube</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Pinterest</div>
+      </div>
+    </div>
+
+    <div class="ob-row">
+      <div class="ob-field">
+        <label class="ob-label">Posting frequency needed</label>
+        <select>
+          <option>3× per week</option>
+          <option>5× per week (weekdays)</option>
+          <option>Daily</option>
+          <option>Flexible — advise me</option>
+        </select>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Content tone & style</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="singleChip(this,'social-tone')">Professional</div>
+          <div class="ob-chip" onclick="singleChip(this,'social-tone')">Friendly & casual</div>
+          <div class="ob-chip" onclick="singleChip(this,'social-tone')">Bold & edgy</div>
+          <div class="ob-chip" onclick="singleChip(this,'social-tone')">Educational</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Existing account handles / profile URLs</label>
+      <textarea placeholder="e.g. instagram.com/yourbrand, linkedin.com/company/yourbrand — list all active profiles..." style="min-height:64px"></textarea>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Content to include</label>
+      <div class="ob-chips">
+        <div class="ob-chip" onclick="toggleChip(this)">Product / service posts</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Behind-the-scenes</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Customer testimonials</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Educational tips</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Promotions & offers</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Team / culture</div>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Will you provide photos / videos, or should we create them?</label>
+      <div class="ob-chips">
+        <div class="ob-chip selected" onclick="singleChip(this,'social-assets')">We'll provide assets</div>
+        <div class="ob-chip" onclick="singleChip(this,'social-assets')">Please create them</div>
+        <div class="ob-chip" onclick="singleChip(this,'social-assets')">Mix of both</div>
+      </div>
+    </div>
+    </div><!-- /socialMediaSection -->
+
+    <!-- ── REPUTATION DETAILS ── -->
+    <div id="reputationSection" style="display:block;">
+    <div class="ob-section-label">Reputation Details</div>
+
+    <div class="ob-info-box" style="margin-bottom: 20px;">
+      <strong>Haven't purchased Reputation Management yet?</strong> Fill this in if you're interested — our team will reach out to discuss adding it to your package.
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Primary review platforms</label>
+      <div class="ob-chips">
+        <div class="ob-chip selected" onclick="toggleChip(this)">Google Business Profile</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Facebook</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Yelp</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Trustpilot</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Tripadvisor</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Industry-specific (G2, Houzz, etc.)</div>
+      </div>
+    </div>
+
+    <div class="ob-row">
+      <div class="ob-field">
+        <label class="ob-label">Current average star rating</label>
+        <select>
+          <option>5.0 ★★★★★</option>
+          <option>4.5 – 4.9 ★★★★½</option>
+          <option>4.0 – 4.4 ★★★★</option>
+          <option>3.0 – 3.9 ★★★</option>
+          <option>Under 3.0 ★★</option>
+          <option>No reviews yet</option>
+        </select>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Number of existing reviews (total)</label>
+        <select>
+          <option>None yet</option>
+          <option>1 – 10</option>
+          <option>11 – 50</option>
+          <option>51 – 200</option>
+          <option>200+</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Current reputation challenges</label>
+      <div class="ob-chips">
+        <div class="ob-chip" onclick="toggleChip(this)">Not enough reviews</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Negative reviews present</div>
+        <div class="ob-chip" onclick="toggleChip(this)">No review response strategy</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Inconsistent listings info</div>
+        <div class="ob-chip" onclick="toggleChip(this)">Competitor reputation stronger</div>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Do you currently respond to reviews?</label>
+      <div class="ob-chips">
+        <div class="ob-chip selected" onclick="singleChip(this,'rep-respond')">Yes — regularly</div>
+        <div class="ob-chip" onclick="singleChip(this,'rep-respond')">Sometimes</div>
+        <div class="ob-chip" onclick="singleChip(this,'rep-respond')">No — need help</div>
+      </div>
+    </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Any specific negative reviews or situations to address?</label>
+      <textarea placeholder="Briefly describe any known issues — we'll handle the strategy confidentially..." style="min-height:64px"></textarea>
+    </div>
+    </div><!-- /reputationSection -->
+
   </div>
 
   <!-- ══════════════════════════════════════ -->
@@ -1049,6 +1311,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
         </div>
       </div>
       <div class="ob-share-row">Share access with → <span class="ob-email-badge">rm@vsplash.com</span></div>
+      <a href="https://www.facebook.com/help/187316341316631" class="ob-access-link" target="_blank">→ How to add a Page Manager on Facebook</a>
       <div class="ob-chips" style="margin-top:8px;">
         <div class="ob-chip selected" onclick="singleChip(this,'social')">Have both — will share</div>
         <div class="ob-chip" onclick="singleChip(this,'social')">Facebook only</div>
@@ -1065,13 +1328,35 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
           <div class="ob-access-sub">cPanel · Namecheap · GoDaddy · Cloudflare · other</div>
         </div>
       </div>
-      <div class="ob-row" style="margin-bottom:10px;">
-        <input type="text" placeholder="Hosting provider name" />
-        <input type="text" placeholder="Domain registrar (if different)" />
+
+      <div class="ob-field" style="margin-bottom:10px;">
+        <label class="ob-label" style="font-size:15px;">Hosting Provider Name</label>
+        <input type="text" placeholder="e.g. SiteGround, Bluehost, GoDaddy, WP Engine..." />
+      </div>
+      <div class="ob-row" style="margin-bottom:16px;">
+        <div class="ob-field" style="margin-bottom:0;">
+          <label class="ob-label" style="font-size:15px;">Hosting Username</label>
+          <input type="text" placeholder="Hosting username" />
+        </div>
+        <div class="ob-field" style="margin-bottom:0;">
+          <label class="ob-label" style="font-size:15px;">Hosting Password</label>
+          <input type="password" placeholder="Hosting password" />
+        </div>
+      </div>
+
+      <div class="ob-field" style="margin-bottom:10px;">
+        <label class="ob-label" style="font-size:15px;">Domain Registrar Name</label>
+        <input type="text" placeholder="e.g. Namecheap, GoDaddy, Google Domains, Cloudflare..." />
       </div>
       <div class="ob-row">
-        <input type="text" placeholder="Username" />
-        <input type="password" placeholder="Password" />
+        <div class="ob-field" style="margin-bottom:0;">
+          <label class="ob-label" style="font-size:15px;">Domain Username</label>
+          <input type="text" placeholder="Domain registrar username" />
+        </div>
+        <div class="ob-field" style="margin-bottom:0;">
+          <label class="ob-label" style="font-size:15px;">Domain Password</label>
+          <input type="password" placeholder="Domain registrar password" />
+        </div>
       </div>
     </div>
   </div>
@@ -1282,6 +1567,52 @@ function toggleChip(el) { el.classList.toggle('selected'); }
 function singleChip(el) {
   el.closest('.ob-chips').querySelectorAll('.ob-chip').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
+}
+
+function toggleService(el, key) {
+  el.classList.toggle('selected');
+
+  // Map each service key to its section ID(s)
+  const sectionMap = {
+    'seo':           ['seoSection'],
+    'web-design':    ['webDesignSection'],
+    'growth-bundle': ['webDesignSection', 'growthBundleSection'],
+    'paid-ads':      ['paidAdsSection'],
+    'social-media':  ['socialMediaSection'],
+    'reputation':    ['reputationSection'],
+  };
+
+  // For sections that can be triggered by multiple cards, check all relevant cards
+  const multiTrigger = {
+    'webDesignSection': ['web-design', 'growth-bundle'],
+  };
+
+  const sectionsToUpdate = sectionMap[key] || [];
+  sectionsToUpdate.forEach(sectionId => {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    if (multiTrigger[sectionId]) {
+      // Show if ANY of the linked cards is selected
+      const anySelected = multiTrigger[sectionId].some(k =>
+        document.querySelector(`[onclick*="${k}"]`)?.classList.contains('selected')
+      );
+      section.style.display = anySelected ? 'block' : 'none';
+    } else {
+      // Show only if this card is selected
+      section.style.display = el.classList.contains('selected') ? 'block' : 'none';
+    }
+  });
+}
+
+function toggleBrandNote(el, val) {
+  const note = document.getElementById('brandGuideNote');
+  note.style.display = (val === 'no') ? 'block' : 'none';
+}
+
+function toggleDomainCreds(el) {
+  const row = document.getElementById('domainCredsRow');
+  row.style.display = el.value.trim().length > 0 ? 'block' : 'none';
 }
 
 buildNav();
