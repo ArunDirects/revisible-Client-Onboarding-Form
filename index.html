@@ -788,7 +788,7 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
         <div class="ob-chip" onclick="singleChip(this,'brand');toggleBrandNote(this,'no')">No — need help creating</div>
       </div>
       <div id="brandGuideNote" style="display:none; margin-top:12px;" class="ob-info-box">
-        <strong>We can help with that.</strong> Our team offers brand guideline creation as an add-on service — including logo, colour palette, typography, and usage rules. We'll include a cost for this in your onboarding proposal.
+        <strong>We can help with that.</strong> Our team offers brand guideline creation as an add-on service — including logo, color palette, typography, and usage rules. We'll include a cost for this in your onboarding proposal.
       </div>
     </div>
 
@@ -1094,25 +1094,51 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
     <div class="ob-section-label">Social Media Details</div>
 
     <div class="ob-info-box" style="margin-bottom: 20px;">
-      <strong>Haven't purchased Social Media yet?</strong> Fill this in if you're interested — our team will reach out to discuss adding it to your package.
+      <strong>Don't have Social Media yet?</strong> Fill this in if you're interested — our team will reach out to discuss adding it to your package.
     </div>
 
     <div class="ob-field">
-      <label class="ob-label">Platforms to manage</label>
+      <label class="ob-label">Do you currently have social media pages?</label>
       <div class="ob-chips">
-        <div class="ob-chip selected" onclick="toggleChip(this)">Instagram</div>
-        <div class="ob-chip selected" onclick="toggleChip(this)">Facebook</div>
-        <div class="ob-chip" onclick="toggleChip(this)">LinkedIn</div>
-        <div class="ob-chip" onclick="toggleChip(this)">X (Twitter)</div>
-        <div class="ob-chip" onclick="toggleChip(this)">TikTok</div>
-        <div class="ob-chip" onclick="toggleChip(this)">YouTube</div>
-        <div class="ob-chip" onclick="toggleChip(this)">Pinterest</div>
+        <div class="ob-chip selected" onclick="singleChip(this,'has-social');toggleSocialExisting(true)">Yes — I have existing pages</div>
+        <div class="ob-chip" onclick="singleChip(this,'has-social');toggleSocialExisting(false)">No — starting from scratch</div>
       </div>
     </div>
 
-    <div class="ob-row">
+    <!-- Shown if they have existing pages -->
+    <div id="socialExistingBlock">
       <div class="ob-field">
-        <label class="ob-label">Posting frequency needed</label>
+        <label class="ob-label">Which platforms do you currently have?</label>
+        <div class="ob-chips">
+          <div class="ob-chip selected" onclick="toggleChip(this)">Facebook</div>
+          <div class="ob-chip selected" onclick="toggleChip(this)">Instagram</div>
+          <div class="ob-chip" onclick="toggleChip(this)">LinkedIn</div>
+          <div class="ob-chip" onclick="toggleChip(this)">X (Twitter)</div>
+        </div>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Existing account handles / profile URLs</label>
+        <textarea placeholder="e.g. instagram.com/yourbrand, facebook.com/yourbrand — list all active profiles..." style="min-height:64px"></textarea>
+      </div>
+    </div>
+
+    <!-- Shown if they are starting from scratch -->
+    <div id="socialNewBlock" style="display:none;">
+      <div class="ob-field">
+        <label class="ob-label">Which platforms would you like us to set up?</label>
+        <div class="ob-chips">
+          <div class="ob-chip" onclick="toggleChip(this)">Facebook</div>
+          <div class="ob-chip" onclick="toggleChip(this)">Instagram</div>
+          <div class="ob-chip" onclick="toggleChip(this)">LinkedIn</div>
+        </div>
+        <div class="ob-hint" style="margin-top:8px;">We currently set up and manage Facebook, Instagram, and LinkedIn. If you need other platforms, let us know in the notes below.</div>
+      </div>
+    </div>
+
+    <!-- Posting & content — always shown -->
+    <div class="ob-row" style="margin-top:4px;">
+      <div class="ob-field">
+        <label class="ob-label">Posting frequency</label>
         <select>
           <option>3× per week</option>
           <option>5× per week (weekdays)</option>
@@ -1129,11 +1155,6 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
           <div class="ob-chip" onclick="singleChip(this,'social-tone')">Educational</div>
         </div>
       </div>
-    </div>
-
-    <div class="ob-field">
-      <label class="ob-label">Existing account handles / profile URLs</label>
-      <textarea placeholder="e.g. instagram.com/yourbrand, linkedin.com/company/yourbrand — list all active profiles..." style="min-height:64px"></textarea>
     </div>
 
     <div class="ob-field">
@@ -1156,6 +1177,12 @@ textarea { resize: vertical; min-height: 88px; line-height: 1.55; }
         <div class="ob-chip" onclick="singleChip(this,'social-assets')">Mix of both</div>
       </div>
     </div>
+
+    <div class="ob-field">
+      <label class="ob-label">Any additional notes on platforms or requirements?</label>
+      <textarea placeholder="Other platforms you use, specific campaigns, anything else we should know..." style="min-height:56px"></textarea>
+    </div>
+
     </div><!-- /socialMediaSection -->
 
     <!-- ── REPUTATION DETAILS ── -->
@@ -1604,6 +1631,11 @@ function toggleService(el, key) {
 function toggleBrandNote(el, val) {
   const note = document.getElementById('brandGuideNote');
   note.style.display = (val === 'no') ? 'block' : 'none';
+}
+
+function toggleSocialExisting(hasExisting) {
+  document.getElementById('socialExistingBlock').style.display = hasExisting ? 'block' : 'none';
+  document.getElementById('socialNewBlock').style.display = hasExisting ? 'none' : 'block';
 }
 
 function toggleDomainCreds(el) {
